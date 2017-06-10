@@ -1,0 +1,215 @@
+Plot 0
+    name <PLOT: Free Handouts>
+    element1 <Character>
+	Element2 <Prefab>
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+	Element6 <Prefab>
+	Element7 <Prefab>
+	Element8 <Prefab>
+	Element9 <Prefab>
+	Element10 <Prefab>
+	Element11 <Prefab>
+	Element12 <Prefab>
+    Stat 1 500
+sub
+    Persona 1
+    greeting <if= V1 0 else goAlreadyStarted NewChat Say 1 AddChat 1 AddChat 2 V= 1 1>
+    goAlreadyStarted <if= V1 1 else goAlreadySaidPlease NewChat Say 2 AddChat 1 AddChat 2>
+    goAlreadySaidPlease <NewChat Say 5 AddChat 3 AddChat 4 AddChat 5 AddChat 6 AddChat 7 AddChat 8 AddChat 9 AddChat 10 AddChat 11 AddChat 12 AddChat 13 AddChat 14 AddChat 15 AddChat 16 AddChat 17 AddChat 18 AddChat 19 AddChat 20>
+    Result1 <NewChat Say 3>
+    Result2 <V= 1 2 NewChat Say 4 AddChat 3 AddChat 4 AddChat 5 AddChat 6 AddChat 7 AddChat 8 AddChat 9 AddChat 10 AddChat 11 AddChat 12 AddChat 13 AddChat 14 AddChat 15 AddChat 16 AddChat 17 AddChat 18 AddChat 19 AddChat 20>
+    Result3 <EndChat Say 6 CASH+ 1>
+    Result4 <EndChat Say 6 CASH+ 2>
+    Result5 <EndChat Say 7>
+    Result6 <Say 8 GiveKeyItem E2 GiveKeyItem E3 GiveKeyItem E4 GiveKeyItem E5 GiveKeyItem E6 GiveKeyItem E7>
+    Result7 <Say 8 GiveKeyItem E8 GiveKeyItem E9 GiveKeyItem E10 GiveKeyItem E11 GiveKeyItem E12>
+    Result7 <Say 8 GiveKeyItem E1>
+    Result8 <Say 8 GiveKeyItem E2>
+    Result9 <Say 8 GiveKeyItem E3>
+    Result10 <Say 8 GiveKeyItem E4>
+    Result11 <Say 8 GiveKeyItem E5>
+    Result12 <Say 8 GiveKeyItem E6>
+    Result13 <Say 8 GiveKeyItem E7>
+    Result14 <Say 8 GiveKeyItem E8>
+    Result15 <Say 8 GiveKeyItem E9>
+    Result16 <Say 8 GiveKeyItem E10>
+    Result17 <Say 8 GiveKeyItem E11>
+    Result18 <Say 8 GiveKeyItem E12>
+    Result19 <Say 8 GiveKeyItem E13>
+    Msg1 <Well, I've thought about it. Before we go on, you have to ask me nicely.>
+    Msg2 <You're back. Are you ready to ask nicely?>
+    Msg3 <Suit yourself.>
+    Msg4 <Sounds good. How much do you want?>
+    Msg5 <Hi again. How much do you want?>
+    Msg6 <Ok, here you go.>
+    Msg7 <Ha-ha, not likely.>
+    Msg8 <Here are the items.>
+    Prompt1 <No, I am too dignified.>
+    Prompt2 <Okay, fine. Pretty please?>
+    Prompt3 <$1 would be good.>
+    Prompt4 <$2 is what I need.>
+    Prompt5 <$50 and nothing less!>
+    Prompt6 <Give Guardian Items>
+    Prompt7 <Give Zeron Armor>
+    Prompt8 <Give Item 01>
+    Prompt9 <Give Item 02>
+    Prompt10 <Give Item 03>
+    Prompt11 <Give Item 04>
+    Prompt12 <Give Item 05>
+    Prompt13 <Give Item 06>
+    Prompt14 <Give Item 07>
+    Prompt15 <Give Item 08>
+    Prompt16 <Give Item 09>
+    Prompt17 <Give Item 10>
+    Prompt18 <Give Item 11>
+    Prompt19 <Give Item 12>
+    Prompt20 <Give Item 13>
+end
+inv
+    Instrument 2
+    Name <Guitar>
+    desc <A large, stringed instrument played by plucking the strings.>
+    UseBonus 0
+    UseRange 6
+
+    Food 30
+    mass -2
+    name <Bananas>
+
+	Food 50
+	name <Macaroni and Cheese>
+
+	Shield 8
+	DefBonus 3
+	name <Androbot Shield>
+
+	BodyArmor 9
+	name <Androbot Armor>
+
+	ArmArmor 7
+	name <Zeron Sleeve>
+	scale 0
+	mass -2
+	Biotech
+	Clue29 <Print 1>
+	Msg1 <A gauntlet crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+	sub
+		Melee 12
+		name <High Frequency Blade>
+		type <BRUTAL ARMORPIERCING>
+		recharge 1
+		mass -4
+	end
+
+	LegArmor 7
+	name <Zeron Legging>
+	mass -2
+	scale 0
+	Biotech
+	Clue29 <Print 1>
+	Msg1 <A legging crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+        sub
+	        Flight 12
+        end
+
+	Grenade 25
+	name <The Fire of Heaven>
+	mass 8
+	type <Blast 7 Mystery Hyper Armorpiercing Brutal Burn Haywire>
+	Clue29 <Print 1>
+	Msg1 <This appears to be a primitive but extremely powerful microfusion reactor. You better handle it carefully or it could explode.>
+
+	HeadArmor 7
+	name <Zeron Helmet>
+	Biotech
+	mass -12
+	scale 0
+	Clue29 <Print 1>
+	Msg1 <A helmet crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+	sub
+		PCS 5
+	end
+
+	BodyArmor 8
+	scale 0
+	mass -4
+	name <Zeron Armor>
+	Biotech
+	Clue29 <Print 1>
+	Msg1 <A bodysuit crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+	sub
+		gear 4 3 20
+		name <Mega Smasher>
+		type <LINE BURN STRAIN MYSTERY>
+		scale 0
+		mass 2
+		Range 6
+		Acc -2
+		Recharge 1
+	end
+
+    gear 4 2 6
+    name <Peacemaker>
+    scale 0
+    Range 4
+    Accuracy 1
+    Recharge 7
+    BV 4
+    stat 8 80
+    mass -10
+    sub
+        % Ammunition
+        gear 5 2 6
+        mass -2
+    end
+
+	Gun 6
+	name <Peacemaker>
+	Range 5
+	BV 3
+	Magazine 80
+	mass -7
+	Acc 1
+	Recharge 7
+	sub
+		ammo 6
+		type <ARMORPIERCING>
+		mass -1
+	end
+
+	BodyArmor 9
+	name <SWAT Armor>
+	Mass -13
+	sub
+		MLauncher 3
+		name <Rocket Pack>
+		Acc -1
+		Magazine 30
+		range 8
+		type <SWARM>
+		sub
+			Rockets 3
+		end
+	end
+
+	Melee 23
+	name <Hammer of Justice>
+	mass -15
+	type <BRUTAL EXTEND THROWN RETURNING>
+	Acc 2
+	Recharge 4
+
+	HeadArmor 9
+	name <SWAT Helmet>
+	mass -16
+	sub
+		PCS 3
+		mass -2
+	end
+
+    gear 4 1 8
+    name <Power Maul>
+    scale 0
+end

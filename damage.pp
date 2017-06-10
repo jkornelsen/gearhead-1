@@ -1006,7 +1006,7 @@ begin
 				desc := desc + ' ' + UpCase( AA );
 			end;
 		end;
-
+		{ desc := desc + ComponentValueString( Weapon ); }
 	end else if Weapon^.G = GG_Ammo then begin
 		AA := WeaponAttackAttributes( Weapon );
 
@@ -1112,8 +1112,13 @@ end;
 Function ShieldDescription( Part: GearPtr ): String;
 	{ Return a description of the size/type of this movement }
 	{ system. }
+var
+	msg: String;
 begin
-	ShieldDescription := SATtValue( Damage_Strings , 'Shield_Desc' ) + SgnStr( Part^.Stat[ STAT_ShieldBonus ] );
+	msg := SATtValue( Damage_Strings , 'Shield_Desc' ) + SgnStr( Part^.Stat[ STAT_ShieldBonus ] );
+	{ msg := msg + ComponentValueString( Part ); }
+    
+	ShieldDescription := msg;
 end;
 
 Function UsableDescription( Part: GearPtr ): String;
@@ -1124,14 +1129,19 @@ var
 begin
 	msg := ReplaceHash( SATtValue( Damage_Strings , 'Usable_Desc' ) , BStr( Part^.Stat[ STAT_UseBonus ] ) );
 	msg := ReplaceHash( msg , BStr( Part^.Stat[ STAT_UseRange ] ) );
+	{ msg := msg + ComponentValueString( Part ); }
 	UsableDescription := msg;
 end;
 
 Function RepairFuelDescription( Part: GearPtr ): String;
 	{ Return a description of the size/type of this movement }
 	{ system. }
+var
+	msg: String;
 begin
-	RepairFuelDescription := SkillMan[ Part^.S ].Name + ' ' + BStr( Part^.V ) + ' DP';
+	msg := SkillMan[ Part^.S ].Name + ' ' + BStr( Part^.V ) + ' DP';
+	{ msg := msg + ComponentValueString( Part ); }
+	RepairFuelDescription := msg;
 end;
 
 Function IntrinsicsDescription( Part: GearPtr ): String;

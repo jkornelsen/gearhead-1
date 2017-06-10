@@ -827,10 +827,10 @@ begin
 		DoleExperience( TruePC , 1 );
 		it := True;
 
-	end else if SkRoll > SkTarget then begin
-		RemoveGear( Item^.Parent^.SubCom , Item );
-		Item := Nil;
-		it := True;
+	{ end else if SkRoll > SkTarget then begin }
+	{	RemoveGear( Item^.Parent^.SubCom , Item ); }
+	{	Item := Nil; }
+	{	it := True; }
 
 	end else begin
 		it := False;
@@ -973,9 +973,9 @@ begin
 		DoleExperience( TruePC , 10 );
 		DelinkGear( Item^.Parent^.InvCom , Item );
 		InsertSubCom( Slot , Item );
-	end else if SkRoll < WreckTarget then begin
-		RemoveGear( Item^.Parent^.InvCom , Item );
-		Item := Nil;
+	{ end else if SkRoll < WreckTarget then begin }
+	{	RemoveGear( Item^.Parent^.InvCom , Item ); }
+	{	Item := Nil; }
 	end;
 
 	AddMentalDown( TruePC , 1 );
@@ -1573,6 +1573,7 @@ begin
 	AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_UseSkillOnItem' ) , 1 );
 	AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_ExitTIWS' ) , -1 );
 
+    AlphaKeyMenu( TIWS_Menu );
 	repeat
 {$IFDEF SDLMODE}
 		BP_Focus := Item;
@@ -1937,6 +1938,7 @@ begin
 	{ Sort the menu, then add an exit option. }
 	RPMSortAlpha( RPM );
 	AddRPGMenuItem( RPM , MsgString( 'FHQ_ReturnToMain' ) , -1 );
+	AlphaKeyMenu( RPM );
 
 	{ Get a menu selection, then exit the menu. }
 	DialogMSG( MsgString( 'FHQ_SelectDestination' ) );
@@ -2017,6 +2019,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'FHQ_ReturnToMain' ) , -1 );
 
         SetItemByValue( RPM , N );
+        AlphaKeyMenu( RPM );
 
 		{ Get a selection from the menu, then dispose of it. }
 {$IFDEF SDLMODE}

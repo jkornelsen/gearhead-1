@@ -27,9 +27,9 @@ Procedure EditMap;
 implementation
 
 {$IFDEF SDLMODE}
-uses gears,locale,ui4gh,congfx,sdlinfo,sdlmap,sdlmenus;
+uses gears,locale,menugear,ui4gh,congfx,sdlinfo,sdlmap,sdlmenus;
 {$ELSE}
-uses gears,locale,ui4gh,congfx,coninfo,conmap,conmenus,context;
+uses gears,locale,menugear,ui4gh,congfx,coninfo,conmap,conmenus,context;
 {$ENDIF}
 
 Procedure SaveMap( GB: GameBoardPtr );
@@ -69,6 +69,7 @@ var
 begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 	BuildFileMenu( RPM , Series_Directory + '*MAP_*.txt' );
+	AlphaKeyMenu( RPM );
 	FName := SelectFile( RPM );
 	DisposeRPGMenu( RPM );
 	if FName <> '' then begin

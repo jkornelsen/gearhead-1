@@ -86,7 +86,7 @@ Function SelectFile( RPM: RPGMenuPtr ): String;
 
 implementation
 
-uses crt,dos,congfx,context;
+uses crt,dos,congfx,context,ui4gh;
 
 Function LastMenuItem(MIList: RPGMenuItemPtr): RPGMenuItemPtr;
 	{This procedure will find the last item in the linked list.}
@@ -455,12 +455,14 @@ begin
 
 end;
 
-Procedure RPMUpKey(RPM: RPGMenuPtr);
+Procedure RPMUpKey(RPM: RPGMenuPtr; PageUp: Boolean);
 	{Someone just pressed the UP key, and we're gonna process that input.}
 	{PRECONDITIONS: RPM has been initialized properly, and is currently being}
 	{  displayed on the screen.}
 var
 	width: integer;		{The width of the menu window}
+    N: integer;		{ A number }
+    rows_to_move: integer;
 begin
 	{Lets set up the window.}
 	SetMenuClipZone( RPM );
@@ -479,11 +481,18 @@ begin
 		write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width));
 	end;
 
-	{Decrement the selected item by one.}
-	Dec(RPM^.selectitem);
-	{If this causes it to go beneath one, wrap around to the last item.}
-	if RPM^.selectitem = 0 then
-		RPM^.selectitem := RPM^.numitem;
+    if PageUp then begin
+        rows_to_move := MenuHeight( RPM ); 
+    end else  begin
+        rows_to_move := 1;
+    end;
+	for N := 1 to rows_to_move do begin
+        {Decrement the selected item by one.}
+        Dec(RPM^.selectitem);
+        {If this causes it to go beneath one, wrap around to the last item.}
+        if RPM^.selectitem = 0 then
+            RPM^.selectitem := RPM^.numitem;
+    end;
 
 	{If the movement takes the selected item off the screen, do a redisplay.}
 	{Otherwise, indicate the newly selected item.}
@@ -514,12 +523,14 @@ begin
 
 end;
 
-Procedure RPMDownKey(RPM: RPGMenuPtr);
+Procedure RPMDownKey(RPM: RPGMenuPtr; PageDown: Boolean);
 	{Someone just pressed the DOWN key, and we're gonna process that input.}
 	{PRECONDITIONS: RPM has been initialized properly, and is currently being}
 	{  displayed on the screen.}
 var
 	width: integer;		{The width of the menu window}
+    N: integer;		{ A number }
+    rows_to_move: integer;
 begin
 	{Lets set up the window.}
 	SetMenuClipZone( RPM );
@@ -537,11 +548,18 @@ begin
 		write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width));
 	end;
 
-	{Increment the selected item.}
-	Inc(RPM^.selectitem);
-	{If this takes the selection out of bounds, restart at the first item.}
-	if RPM^.selectitem = RPM^.numitem + 1 then
-		RPM^.selectitem := 1;
+    if PageDown then begin
+        rows_to_move := MenuHeight( RPM ); 
+    end else  begin
+        rows_to_move := 1;
+    end;
+	for N := 1 to rows_to_move do begin
+        {Increment the selected item.}
+        Inc(RPM^.selectitem);
+        {If this takes the selection out of bounds, restart at the first item.}
+        if RPM^.selectitem = RPM^.numitem + 1 then
+            RPM^.selectitem := 1;
+    end;
 
 	{If the movement takes the selected item off the screen, do a redisplay.}
 	{Otherwise, indicate the newly selected item.}
@@ -604,13 +622,20 @@ begin
 		{Certain keys need processing- if so, process them.}
 		case getit of
 			{Selection Movement Keys}
-			'8': RPMUpKey(RPM);
-			'2': RPMDownKey(RPM);
+			'8': RPMUpKey(RPM, False);
+			'2': RPMDownKey(RPM, False);
+            '-': RPMUpKey(RPM, True);
+            '+': RPMDownKey(RPM, True);
 
 			{If we receive an ESC, better check to make sure we're in a}
 			{cancelable menu. If not, convert the ESC to an unused key.}
 			#27: If RPM^.Mode = RPMNoCancel then getit := 'Q';
 		end;
+        if getit = KeyMap[ KMC_NorthEast ].KCode then begin {Page Up}
+            RPMUpKey(RPM, True);
+        end else if getit = KeyMap[ KMC_SouthEast ].KCode then begin {Page Down}
+            RPMDownKey(RPM, True);
+        end;
 
 		{Check to see if a special MENU KEY has been pressed.}
 		if RPM^.FirstKey <> Nil then begin

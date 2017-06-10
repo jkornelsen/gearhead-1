@@ -46,11 +46,11 @@ implementation
 
 {$IFDEF SDLMODE}
 uses ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
-     locale,navigate,pcaction,randchar,randmaps,texutil,wmonster,
+     locale,menugear,navigate,pcaction,randchar,randmaps,texutil,wmonster,
      sdlinfo,sdlmap,sdlmenus,ui4gh,backpack;
 {$ELSE}
 uses ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
-     locale,navigate,pcaction,randchar,randmaps,texutil,wmonster,
+     locale,menugear,navigate,pcaction,randchar,randmaps,texutil,wmonster,
      coninfo,congfx,conmap,conmenus,context,ui4gh;
 {$ENDIF}
 
@@ -614,6 +614,7 @@ begin
 	AddRPGMenuItem( OpMenu , 'Sell this Mecha' , -2 );
 	AddRPGMenuItem( OpMenu , 'Repair Mecha' , 3 );	
 	AddRPGMenuItem( OpMenu , 'Exit' , -1 );
+	AlphaKeyMenu( OpMenu );
 
 	{ Error check- this unit better have some meks purchased already. }
 	if MekMenu^.NumItem > 0 then begin
@@ -746,6 +747,7 @@ begin
 	AddRPGMenuItem( OpMenu , 'Do Training' , 2 );
 	AddRPGMenuItem( OpMenu , 'Quit This Team' , -2 );
 	AddRPGMenuItem( OpMenu , 'Exit' , -1 );
+	AlphaKeyMenu( OpMenu );
 
 	{ Error check- this unit better have some chars hired already. }
 	if PCMenu^.NumItem > 0 then begin
@@ -851,6 +853,7 @@ begin
 	AddRPGMenuItem( ECM , 'Regular' , 3 );
 	AddRPGMenuItem( ECM , 'Hard' , 6 );
 	AddRPGMenuItem( ECM , 'Suicidal' , 10 );
+	AlphaKeyMenu( ECM );
 
 	{ Input the difficulcy level, and dispose of the menu right away. }
 {$IFDEF SDLMODE}
@@ -886,6 +889,7 @@ begin
 			Mek := Mek^.Next;
 			Inc( N );
 		end;
+	    AlphaKeyMenu( ECM );
 
 		{ Get input from the menu, if there are any mechas left. }
 		if ECM^.NumItem > 0 then begin
@@ -1098,6 +1102,7 @@ begin
 	AddRPGMenuItem( RPM , 'Create New Character' , 4 );
 	AddRPGMenuItem( RPM , 'Enter Combat' , 6 );
 	AddRPGMenuItem( RPM , 'Exit to Main' , 0 );
+	AlphaKeyMenu( RPM );
 	RPM^.mode := RPMNoCancel;
 
 	{ Set up the display. }
@@ -1171,6 +1176,7 @@ begin
 	{ Otherwise, go straight to the NEW UNIT procedure. }
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		DialogMSG('Select unit file to load.');
 {$IFDEF SDLMODE}
 		uname := SelectFile( RPM , Nil );
@@ -1207,6 +1213,7 @@ begin
 
 	if RPM^.NumItem > 1 then begin
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		DialogMsg( MsgString( 'SelectCampaignFile' ) );
 
 {$IFDEF SDLMODE}
@@ -1269,6 +1276,7 @@ begin
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
 		AddRPGMenuItem( RPM , MsgString( 'STARTRPG_NewChar' ) , -2 );
+        AlphaKeyMenu( RPM );
 		DialogMSG('Select character file.');
 {$IFDEF SDLMODE}
 		uname := SelectFile( RPM , RD );

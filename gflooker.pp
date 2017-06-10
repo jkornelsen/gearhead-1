@@ -89,7 +89,8 @@ var
 	msg: String;
 begin
 	{ Generate instructions. }
-	msg := '[' + KeyMap[ KMC_SwitchWeapon ].KCode + '] Change Weapon' + #13;
+	msg := '[' + KeyMap[ KMC_SwitchWeaponNext ].KCode + '] Next Weapon' + #13;
+	msg := msg + ' [' + KeyMap[ KMC_SwitchWeaponPrev ].KCode + '] Previous Weapon' + #13;
 	msg := msg + ' [' + KeyMap[ KMC_CalledShot ].KCode + '] Called Shot: ';
 	if LOOKER_CallShot then msg := msg + 'On'
 	else msg := msg + 'Off';
@@ -173,6 +174,7 @@ begin
 			AddRPGMenuItem( TMM , msg , T );
 		end;
 	end;
+	AlphaKeyMenu( TMM );
 
 	CreateTileMechaMenu := TMM;
 end;
@@ -378,8 +380,11 @@ begin
 		end else if A = KeyMap[ KMC_SouthEast ].KCode then begin
 			RepositionCursor( 1 );
 
-		end else if ( A = KeyMap[ KMC_SwitchWeapon ].KCode ) and ( LOOKER_Weapon <> Nil ) and ( LOOKER_Origin <> Nil ) then begin
-			LOOKER_Weapon := FindNextWeapon( GB , LOOKER_Origin , LOOKER_Weapon , Range( LOOKER_Origin , X , Y ) );
+		end else if ( A = KeyMap[ KMC_SwitchWeaponNext ].KCode ) and ( LOOKER_Weapon <> Nil ) and ( LOOKER_Origin <> Nil ) then begin
+			LOOKER_Weapon := FindNextWeapon( GB , LOOKER_Origin , LOOKER_Weapon , Range( LOOKER_Origin , X , Y ), True );
+
+		end else if ( A = KeyMap[ KMC_SwitchWeaponPrev ].KCode ) and ( LOOKER_Weapon <> Nil ) and ( LOOKER_Origin <> Nil ) then begin
+			LOOKER_Weapon := FindNextWeapon( GB , LOOKER_Origin , LOOKER_Weapon , Range( LOOKER_Origin , X , Y ), False );
 
 		end else if ( A = KeyMap[ KMC_SwitchTarget ].KCode ) and ( LOOKER_Weapon <> Nil ) and ( LOOKER_Origin <> Nil ) then begin
 			RedrawTile( gb, X , Y );

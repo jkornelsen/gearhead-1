@@ -80,6 +80,9 @@ begin
 		{work as well. Therefore, convert all enter codes to spaces.}
 		#10: RK := ' ';
 		#13: RK := ' ';
+
+        {#21: RK := '-';   Page Up}
+        {#36: RK := '+';   Page Down}
 	end;
 
 	RPGKey := RK;
@@ -354,6 +357,7 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 	end;
 var
 	A: Char;
+    N: LongInt;		{ The number for a loop }
 begin
 	ClrScr;
 	GotoXY( 1 , ScreenROws );
@@ -375,6 +379,16 @@ begin
 			DisplayTextHere;
 		end else if A = KeyMap[ KMC_North ].KCode then begin
 			Dec( FirstLine );
+			DisplayTextHere;
+        end else if A = KeyMap[ KMC_NorthEast ].KCode then begin {Page Up}
+	        for N := 1 to ScreenRows - 1 do begin
+                Dec( FirstLine );
+            end;
+			DisplayTextHere;
+        end else if A = KeyMap[ KMC_SouthEast ].KCode then begin {Page Down}
+	        for N := 1 to ScreenRows - 1 do begin
+                Inc( FirstLine );
+            end;
 			DisplayTextHere;
 		end;
 

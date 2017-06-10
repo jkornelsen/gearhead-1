@@ -102,7 +102,7 @@ const
 	ScreenColumns: Byte = 80;
 
 
-	NumMappedKeys = 45;
+	NumMappedKeys = 46;
 	KeyMap: Array [1..NumMappedKeys] of KeyMapDesc = (
 	(	CmdName: 'NormSpeed';
 		CmdDesc: 'Travel foreword at normal speed.';
@@ -195,9 +195,12 @@ const
 	(	CmdName: 'Help';
 		CmdDesc: 'View these helpful messages.';
 		KCode: 'h';	),
-	(	CmdName: 'SwitchWeapon';
-		CmdDesc: 'Change the active weapon while selecting a target.';
+	(	CmdName: 'SwitchWeaponNext';
+		CmdDesc: 'Change to next active weapon while selecting a target.';
 		KCode: '.';	),
+	(	CmdName: 'SwitchWeaponPrev';
+		CmdDesc: 'Change to previous active weapon while selecting a target.';
+		KCode: ',';	),
 
 	(	CmdName: 'CalledShot';
 		CmdDesc: 'Toggle the Called Shot option while selecting a target.';
@@ -305,32 +308,33 @@ const
 	KMC_QuitGame = 17;
 	KMC_Talk = 18;
 	KMC_Help = 19;
-	KMC_SwitchWeapon = 20;
-	KMC_CalledShot = 21;
-	KMC_Recenter = 22;
-	KMC_Get = 23;
-	KMC_Inventory = 24;
-	KMC_Equipment = 25;
-	KMC_Enter = 26;
-	KMC_PartBrowser = 27;
-	KMC_LearnSkills = 28;
-	KMC_Attack = 29;
-	KMC_UseProp = 30;
-	KMC_ViewMemo = 31;
-	KMC_SaveGame = 32;
-	KMC_Enter2 = 33;
-	KMC_CharInfo = 34;
-	KMC_ApplySkill = 35;
-	KMC_Eject = 36;
-	KMC_Rest = 37;
-	KMC_History = 38;
-	KMC_FieldHQ = 39;
-	KMC_Search = 40;
-	KMC_Telephone = 41;
-	KMC_SwitchBV = 42;
-	KMC_Reverse = 43;
-	KMC_SwitchTarget = 44;
-	KMC_RunToggle = 45;
+	KMC_SwitchWeaponNext = 20;
+	KMC_SwitchWeaponPrev = 21;
+	KMC_CalledShot = 22;
+	KMC_Recenter = 23;
+	KMC_Get = 24;
+	KMC_Inventory = 25;
+	KMC_Equipment = 26;
+	KMC_Enter = 27;
+	KMC_PartBrowser = 28;
+	KMC_LearnSkills = 29;
+	KMC_Attack = 30;
+	KMC_UseProp = 31;
+	KMC_ViewMemo = 32;
+	KMC_SaveGame = 33;
+	KMC_Enter2 = 34;
+	KMC_CharInfo = 35;
+	KMC_ApplySkill = 36;
+	KMC_Eject = 37;
+	KMC_Rest = 38;
+	KMC_History = 39;
+	KMC_FieldHQ = 40;
+	KMC_Search = 41;
+	KMC_Telephone = 42;
+	KMC_SwitchBV = 43;
+	KMC_Reverse = 44;
+	KMC_SwitchTarget = 45;
+	KMC_RunToggle = 46;
 
 implementation
 

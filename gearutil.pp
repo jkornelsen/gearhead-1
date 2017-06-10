@@ -51,6 +51,7 @@ Function MakeMassString( BaseMass: LongInt; Scale: Integer ): String;
 Function MassString( Master: GearPtr ): String;
 Function GearDepth( Part: GearPtr ): Integer;
 
+Function ComponentValueString( Part: GearPtr ): String;
 Function ComponentComplexity( Part: GearPtr ): Integer;
 Function SubComComplexity( Part: GearPtr ): Integer;
 
@@ -1334,6 +1335,11 @@ begin
 	it := it + NAttValue( Part^.NA , NAG_GearOps , NAS_Fudge );
 
 	ComponentValue := it;
+end;
+
+Function ComponentValueString( Part: GearPtr ): String;
+begin
+	ComponentValueString := ' PV:' + BStr( ComponentValue(Part) );
 end;
 
 Function TrackValue( Part: GearPtr ): Int64;

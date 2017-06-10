@@ -390,6 +390,13 @@ Scene 2 0
 		Prompt3 <I'll take it.>
 		Prompt4 <On second thought, I don't want anything.>
 
+        Persona 500
+        greeting <NewChat Say 1 AddChat 1>
+        Result1 <NewChat Say 2 Storyline .FreeCashStory AdvancePlot 0>
+        .FreeCashStory <PLOT_FreeHandouts.txt>
+        Msg1 <Hi, what's up?>
+        Msg2 <Maybe so. Give me a second to think about that.>
+        Prompt1 <I've heard you sometimes give free handouts.>
 	end
 	inv
 		% Inv components. Add NPCs & contents here.
@@ -463,6 +470,14 @@ Scene 2 0
 		chardesc Female Old Lawful Heroic Renowned
 		SetTeam 2
 		SetPersona 17
+
+        NPC Citizen
+        name <EZ Cash>
+        home <Mayor's House>
+        rumor <Some people give away their money for no reason at all.>
+        chardesc Male Young Cheerful
+        SetTeam 2
+        SetPersona 500
 
 		NPC Citizen
 		SetTeam 2
@@ -9789,9 +9804,10 @@ inv
 		.MusicStory <TS_STORY_MusicIndustry.txt>
 
 % I'll comment out the IronWind story until it's actually playable...
-%	Plot 0
-%		START <StartStory .IWStory AdvancePlot 0>
-%		.IWStory <TS_IronWind_STORY.txt>
+% JDK 2017-06-03 Uncommented three lines to see what happens.
+	Plot 0
+		START <StartStory .IWStory AdvancePlot 0>
+		.IWStory <TS_IronWind_STORY.txt>
 
 	Plot 0
 		START <StartStory .CetusStory AdvancePlot 0>

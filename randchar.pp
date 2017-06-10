@@ -40,9 +40,9 @@ Procedure GenerateNewPC;
 implementation
 
 {$IFDEF SDLMODE}
-uses gearutil,ghchars,texutil,ui4gh,sdlgfx,sdlinfo,sdlmenus;
+uses gearutil,ghchars,menugear,texutil,ui4gh,sdlgfx,sdlinfo,sdlmenus;
 {$ELSE}
-uses gearutil,ghchars,texutil,ui4gh,congfx,coninfo,conmenus,context;
+uses gearutil,ghchars,menugear,texutil,ui4gh,congfx,coninfo,conmenus,context;
 {$ENDIF}
 
 {$IFDEF SDLMODE}
@@ -132,6 +132,7 @@ begin
 
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_SMOp0' ) , 0 );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_SMOp1' ) , 1 );
+	AlphaKeyMenu( RPM );
 {$IFDEF SDLMODE}
 	RCPromptMessage := MsgString( 'RANDCHAR_SMPrompt' );
 	RCDescMessage := MsgString( 'RANDCHAR_SMDesc' );
@@ -157,6 +158,7 @@ begin
 	AddRPGMenuItem( RPM , GenderName[ NAV_Male ] , NAV_Male );
 	AddRPGMenuItem( RPM , GenderName[ NAV_Female ] , NAV_Female );
 	AddRPGMenuItem( RPM , MsgString('SELECTGENDER_NONBINARY') , NAV_Nonbinary );
+	AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 	RCDescMessage := MsgString( 'RANDCHAR_SGDesc' );
@@ -189,6 +191,7 @@ begin
 	for t := -4 to 10 do begin
 		AddRPGMenuItem( RPM , BStr( T + 20 ) + ' years old' , T );
 	end;
+	AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 	RCDescMessage := MsgString( 'RANDCHAR_SADesc' );
@@ -245,6 +248,7 @@ begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharGenMenu );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_FHAccept' ) , 1 );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_FHDecline' ) , -1 );
+	AlphaKeyMenu( RPM );
 
 	if CanEdit then begin
 {$IFDEF SDLMODE}
@@ -388,6 +392,7 @@ begin
 	AddRPGMenuKey( RPM , KeyMap[ KMC_East ].KCode ,  1 );
 	AddRPGMenuKey( RPM , KeyMap[ KMC_West ].KCode , -1 );
 {$ENDIF}
+	AlphaKeyMenu( RPM );
 
 	repeat
 {$IFDEF SDLMODE}
@@ -589,6 +594,7 @@ begin
 		Job := Job^.Next;
 	end;
 	RPMSortAlpha( RPM );
+	AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 	N := SelectMenu( RPM , @RandCharRedraw );
@@ -686,6 +692,7 @@ begin
 	AddRPGMenuKey( RPM , KeyMap[ KMC_East ].KCode ,  1 );
 	AddRPGMenuKey( RPM , KeyMap[ KMC_West ].KCode , -1 );
 {$ENDIF}
+	AlphaKeyMenu( RPM );
 
 	repeat
 {$IFDEF SDLMODE}
@@ -850,6 +857,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_RomOp' + BStr(N)) , N );
 	end;
     RPMSortAlpha( RPM );
+	AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 	N := SelectMenu( RPM , @RandCharRedraw );
@@ -899,6 +907,7 @@ begin
 	end;
 	RPMSortAlpha( RPM );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_STCancel' ) , -1 );
+	AlphaKeyMenu( RPM );
 
 	Traits := 3;
 	repeat
@@ -947,6 +956,7 @@ begin
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_NextPicture' ) , 1 );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_LastPicture' ) , 2 );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_AcceptPicture' ) , -1 );
+	AlphaKeyMenu( RPM );
 
 	PList := DefaultPortraitList( PC );
 

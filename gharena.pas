@@ -30,9 +30,9 @@ program GHArena;
 {$IFNDEF DEBUG}
 {$APPTYPE GUI}
 {$ENDIF}
-uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap;
+uses gears,sdlgfx,arenahq,menugear,sdlmenus,randchar,navigate,sdlmap;
 {$ELSE}
-uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
+uses gears,congfx,arenahq,conmenus,menugear,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
@@ -75,6 +75,7 @@ begin
 {$ENDIF}
 	AddRPGMenuItem( RPM , 'View Design Files' , 7 );
 	AddRPGMenuItem( RPM , 'Quit Game' , -1 );
+	AlphaKeyMenu( RPM );
 
 	repeat
         {$IFNDEF SDLMODE}

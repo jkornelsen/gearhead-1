@@ -38,7 +38,7 @@ Procedure BuildSlotMenu( RPM: RPGMenuPtr; Master,Item: GearPtr );
 Procedure BuildSubMenu( RPM: RPGMenuPtr; Master,Item: GearPtr; DoMultiplicityCheck: Boolean );
 
 Function LocateGearByNumber( Master: GearPtr; Num: Integer ): GearPtr;
-Function FindNextWeapon( GB: GameBoardPtr; Master,Weapon: GearPtr; MinRange: Integer ): GearPtr;
+Function FindNextWeapon( GB: GameBoardPtr; Master,CurrentWeapon: GearPtr; MinRange: Integer; GetNext: Boolean ): GearPtr;
 Function FindGearIndex( Master , FindThis: GearPtr ): Integer;
 
 Procedure AlphaKeyMenu( RPM: RPGMenuPtr );
@@ -285,14 +285,14 @@ begin
 	LocateGearByNumber := TheGearWeWant;
 end; { LocateGearByNumber }
 
-Function FindNextWeapon( GB: GameBoardPtr; Master,Weapon: GearPtr; MinRange: Integer ): GearPtr;
+Function FindNextWeapon( GB: GameBoardPtr; Master,CurrentWeapon: GearPtr; MinRange: Integer; GetNext: Boolean ): GearPtr;
 	{ This procedure will check recursively through MASTER looking }
 	{ for the first weapon (ready to fire) in standard order following PART. }
 	{ If MinRange > 0, the weapon's range or throwing range must exceed MinRange. }
 	{ If no further weapons are found, it will return the first }
 	{ weapon. }
 var
-	FirstWep,NextWep: GearPtr;
+	FirstWep,NextWep,PrevWep,LastGoodWep: GearPtr;
 	FoundStart: Boolean;
 { PROCEDURES BLOCK }
 	Function WeaponIsOkay( W: GearPtr ): Boolean;
@@ -312,20 +312,26 @@ var
 			if WeaponIsOkay( Part ) then begin
 				if FirstWep = Nil then FirstWep := Part;
 				if FoundStart and ( NextWep = Nil ) then NextWep := Part;
+                if Part = CurrentWeapon then PrevWep := LastGoodWep;
+                LastGoodWep := Part;
 			end;
 
-			if Part = Weapon then FoundStart := True;
+			if Part = CurrentWeapon then FoundStart := True;
 
 			CheckAlongPath( Part^.InvCom );
 			CheckAlongPath( Part^.SubCom );
+
 			Part := Part^.Next;
 		end;
+        { if PrevWep = Nil then PrevWep := LastGoodWep; }
 	end;
 begin
 	FirstWep := Nil;
 	NextWep := Nil;
+	PrevWep := Nil;
+	LastGoodWep := Nil;
 
-	if Weapon = Nil then FoundStart := True
+	if CurrentWeapon = Nil then FoundStart := True
 	else FoundStart := False;
 
 	CheckAlongPath( Master^.InvCom );
@@ -333,10 +339,17 @@ begin
 
 	{ Return either the next weapon or the first weapon, }
 	{ depending upon what we found. }
-	if NextWep = Nil then begin
-		if FirstWep = Nil then FindNextWeapon := Weapon
-		else FindNextWeapon := FirstWep;
-	end else FindNextWeapon := NextWep;
+    if GetNext then begin
+        if NextWep = Nil then begin
+            if FirstWep = Nil then FindNextWeapon := CurrentWeapon
+            else FindNextWeapon := FirstWep;
+        end else FindNextWeapon := NextWep;
+    end else begin
+        if PrevWep = Nil then begin
+            if LastGoodWep = Nil then FindNextWeapon := CurrentWeapon
+            else FindNextWeapon := LastGoodWep;
+        end else FindNextWeapon := PrevWep;
+    end;
 end; { FindNextWeapon }
 
 Function FindGearIndex( Master , FindThis: GearPtr ): Integer;

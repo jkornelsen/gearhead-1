@@ -46,10 +46,10 @@ implementation
 
 {$IFDEF SDLMODE}
 uses arenaplay,arenascript,damage,interact,gearutil,
-     ghchars,ghweapon,movement,randchar,ui4gh,sdlmap,sdlmenus;
+     ghchars,ghweapon,menugear,movement,randchar,ui4gh,sdlmap,sdlmenus;
 {$ELSE}
 uses arenaplay,arenascript,damage,interact,gearutil,
-     ghchars,ghweapon,movement,randchar,ui4gh,congfx,conmap,conmenus,context;
+     ghchars,ghweapon,menugear,movement,randchar,ui4gh,congfx,conmap,conmenus,context;
 {$ENDIF}
 
 Function NoLivingPlayers( PList: GearPtr ): Boolean;
@@ -175,6 +175,7 @@ begin
 	{ If any units are found, allow the player to load one. }
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		DialogMSG('Select campaign file to load.');
 {$IFDEF SDLMODE}
 		rpgname := SelectFile( RPM , Redrawer );

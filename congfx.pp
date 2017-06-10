@@ -111,7 +111,8 @@ const
 	MenuItem: Byte = Cyan;
 	MenuSelect: Byte = LightCyan;
 	TerrainGreen: Byte = Green;
-	PlayerBlue: Byte = LightBlue;
+	{PlayerBlue: Byte = LightBlue;}
+	PlayerBlue: Byte = LightGray;
 	AllyPurple: Byte = LightMagenta;
 	EnemyRed: Byte = Red;
 	NeutralGrey: Byte = LightGray;

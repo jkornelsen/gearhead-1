@@ -60,6 +60,7 @@ begin
 	for t := 0 to (NumForm-1) do begin
 		AddRPGMenuItem( RPM , FormMenuItem( T ) , T , MsgString( 'FACTORY_Form' + BStr( T ) ) );
 	end;
+	AlphaKeyMenu( RPM );
 
 	T := SelectMenu( RPM );
 	DisposeRPGMenu( RPM );
@@ -80,6 +81,7 @@ begin
 	for t := 1 to 10 do begin
 		AddRPGMenuItem( RPM , MsgString( 'FACTORY_Size' + BStr( T ) ) , T );
 	end;
+	AlphaKeyMenu( RPM );
 
 	T := SelectMenu( RPM );
 	DisposeRPGMenu( RPM );
@@ -136,6 +138,7 @@ begin
 	AddRPGMenuItem( ControlMenu , MsgString( 'FACTORY_SetName' ) , FMI_SetName );
 	AddRPGMenuItem( ControlMenu , MsgString( 'FACTORY_SetDesignation' ) , FMI_SetDesig );
 	AddRPGMenuItem( ControlMenu , MsgString( 'FACTORY_AddPart' ) , FMI_AddPart );
+	AlphaKeyMenu( ControlMenu );
 
 	repeat
 		BuildGearMenu( PartMenu , Mek );

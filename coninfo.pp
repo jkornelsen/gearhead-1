@@ -529,7 +529,10 @@ begin
 	N := GearCurrentDamage( Part );
 	if N > 0 then msg := BStr( N )
 	else msg := '-';
-	AI_PrintFromRight( msg + ' DP' , CX , HitsColor( Part ) );
+    msg := msg + ' DP';
+	msg := msg + ComponentValueString( Part );
+	{ AI_PrintFromRight( msg + ' DP' , CX , HitsColor( Part ) ); }
+	AI_PrintFromRight( msg , CX , HitsColor( Part ) );
 
 	N := ( Int64(GearMass( Part )) + 1 ) div 2;
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , ZX2 - ZX1 + 2 , LightGray );
@@ -578,6 +581,9 @@ begin
 	AI_NextLine;
 	AI_Title( SkillMan[ Part^.S ].Name , Yellow );
 	AI_Title( BStr( Part^.V ) + ' DP' , Green );
+
+	AI_NextLine;
+	AI_PrintFromLeft( ComponentValueString( Part ) , ZX2 - ZX1 + 2 , LightGray );
 end;
 
 Procedure GearInfo( Part: GearPtr; X1,Y1,X2,Y2,BorColor: Byte );
@@ -791,6 +797,7 @@ begin
 
 	{ Display the weapon description. }
 	GameMsg( GearName( Part ) + ' ' + WeaponDescription( Part ) , ZONE_Menu1 , InfoGreen );
+	{ GameMsg( GearName( Part ) + ' ' + WeaponDescription( Part ) + ' ' + ComponentValueString( Part ) , ZONE_Menu1 , InfoGreen ); }
 end;
 
 Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr );

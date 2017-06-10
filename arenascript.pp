@@ -168,6 +168,7 @@ begin
 	end;
 
 	if RPM^.NumItem <> 0 then begin
+        AlphaKeyMenu( RPM );
 {$IFDEF SDLMODE}
 		ASRD_GameBoard := GB;
 		ASRD_InfoGear := PC;
@@ -228,7 +229,6 @@ var
 			AddRPGMenuItem( RPM , MsgString( 'MEMO_Prev' ) , 2 );
 			AddRPGMenuKey( RPM , KeyMap[ KMC_East ].KCode , 1 );
 			AddRPGMenuKey( RPM , KeyMap[ KMC_West ].KCode , 2 );
-			AlphaKeyMenu( RPM );
 			RPM^.Mode := RPMNoCleanup;
 			N := 1;
 
@@ -1609,7 +1609,6 @@ begin
 		DeleteWhiteSpace( msg );
 		if Msg <> '' then begin
 			AddRPGMenuItem( IntMenu , Msg , N );
-			RPMSortAlpha( IntMenu );
 		end;
 	end;
 end;
@@ -2068,7 +2067,6 @@ begin
 	AddRPGMenuItem( IntMenu , '[Goodbye]' , -1 );
 	if ( I_NPC <> Nil ) and ( NAttValue( I_NPC^.NA , NAG_Relationship , 0 ) > 0 ) and ( NAttValue( I_NPC^.NA , NAG_Location , NAS_Team ) <> NAV_LancemateTeam ) then AddRPGMenuItem( IntMenu , '[Join]' , CMD_Join );
 	if ( I_NPC <> Nil ) and ( NAttValue( I_NPC^.NA , NAG_Location , NAS_Team ) = NAV_LancemateTeam ) then AddRPGMenuItem( IntMenu , '[Quit Lance]' , CMD_Quit );
-	RPMSortAlpha( IntMenu );
 end;
 
 Procedure ProcessEndChat;
@@ -4181,6 +4179,7 @@ begin
 {$ENDIF}
 
 		if IntMenu^.NumItem > 0 then begin
+            { AlphaKeyMenu( IntMenu ); }
 {$IFDEF SDLMODE}
 			ASRD_GameBoard := GB;
 			CHAT_React := ReactionScore( GB^.Scene , PC , NPC );

@@ -361,6 +361,7 @@ begin
 {$ENDIF}
 		AddRPGMenuItem( RPM , '  Exit Prefrences' , -1 );
 		SetItemByValue( RPM , N );
+        AlphaKeyMenu( RPM );
 {$IFDEF SDLMODE}
 		N := SelectMenu( RPM , @CenterMenuRedraw );
 {$ELSE}
@@ -484,6 +485,7 @@ begin
 	    AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 
         SetItemByValue( RPM, N );
+        AlphaKeyMenu( RPM );
 {$IFDEF SDLMODE}
 		PCACTIONRD_PC := NPC;
         PCACTIONRD_GB := GB;
@@ -846,6 +848,7 @@ begin
 		AddRPGMenuItem( RPM , GearName( it ) , N );
 		Dec( N );
 	end;
+	AlphaKeyMenu( RPM );
 
 	{ Select an item. }
 {$IFDEF SDLMODE}
@@ -1400,6 +1403,7 @@ begin
 
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		DialogMSG('Select plot file to load.');
 {$IFDEF SDLMODE}
 		pname := SelectFile( RPM , @MenuControlRedraw );
@@ -1494,6 +1498,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 
 			RPMSortAlpha( SkMenu );
 			AddRPGMenuItem( SkMenu , MsgString( 'RANDCHAR_ASPDone' ) , -1 );
+            AlphaKeyMenu( SkMenu );
 
 			{ Restore SelectItem , TopItem from the last time. }
 			SkMEnu^.SelectItem := SI;
@@ -1622,6 +1627,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			end;
 
 			AddRPGMenuItem( StMenu , MsgString( 'RANDCHAR_ASPDone' ) , -1 );
+            AlphaKeyMenu( StMenu );
 
 			{ Restore SelectItem , TopItem from the last time. }
 			StMEnu^.SelectItem := SI;
@@ -1723,6 +1729,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		end;
 		RPMSortAlpha( SkMenu );
 		AddRPGMenuItem( SkMenu , '  Cancel' , -1 );
+        AlphaKeyMenu( SkMenu );
 
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
@@ -1756,6 +1763,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 					AddRPGMenuItem( SkMenu , MsgSTring( 'LearnSkill_AcceptPenalty' ) , 1 , MsgString( 'LearnSkill_Warning' ) );
 					AddRPGMenuItem( SkMenu , MsgString( 'LearnSkill_ForgetPrevious' ) , 2 , MsgString( 'LearnSkill_Warning' ) );
 					AddRPGMenuItem( SkMenu , MsgString( 'Cancel' ) , -1 , MsgString( 'LearnSkill_Warning' ) );
+                    AlphaKeyMenu( SkMenu );
 
 {$IFDEF SDLMODE}
 					N2 := SelectMenu( SkMenu , @CharViewRedraw );
@@ -1816,6 +1824,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Cancel' , -1 );
+        AlphaKeyMenu( TMenu );
         {$IFNDEF SDLMODE}
 		CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )) , ZONE_Menu1 , InfoHilight );
         {$ENDIF}
@@ -1884,6 +1893,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Exit' , -1 );
+        AlphaKeyMenu( TMenu );
 
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
@@ -1928,7 +1938,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Exit' , -1 );
-
+        AlphaKeyMenu( TMenu );
 
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
@@ -1969,6 +1979,7 @@ begin
 		end;
 		AddRPGMenuItem( DTMenu ,  MsgString( 'Exit' ) , -1 );
         SetItemByValue( DTMenu, N );
+        AlphaKeyMenu( DTMenu );
 {$IFDEF SDLMODE}
     	PCACTIONRD_PC := PC;
     	PCACTIONRD_GB := GB;
@@ -2246,6 +2257,7 @@ begin
 				{ Create a menu, fill it with bits. }
 				WPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 				BuildGearMenu( WPM , LOOKER_Gear , GG_Module );
+                AlphaKeyMenu( WPM );
 {$IFDEF SDLMODE}
 				N := SelectMenu( WPM , @MenuControlRedraw );
 {$ELSE}
@@ -2274,6 +2286,7 @@ begin
 					{ Create a menu, fill it with bits. }
 					WPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 					BuildGearMenu( WPM , LOOKER_Gear , GG_Module );
+                    AlphaKeyMenu( WPM );
 {$IFDEF SDLMODE}
 					N := SelectMenu( WPM , @MenuControlRedraw );
 {$ELSE}
@@ -2328,7 +2341,6 @@ begin
 	BuildGearMenu( WPM , Mek , GG_Weapon );
 	BuildGearMenu( WPM , Mek , GG_Module );
 	BuildGearMenu( WPM , Mek , GG_Ammo );
-	AlphaKeyMenu( WPM );
 
 	{ Next, filter the generated list so that only weapons which are ready }
 	{ to attack may be attacked with. }
@@ -2360,6 +2372,7 @@ begin
 	AddRPGMenuItem( WPM , '  Options [?]' , -2 );
 	AddRPGMenuKey( WPM , '?' , -2 );
 	AddRPGMenuItem( WPM , '  Cancel [ESC]' , -1 );
+	AlphaKeyMenu( WPM );
 	{ *** END MENU BUILDER *** }
 
 	{ Actually get a selection from the menu. }
@@ -2422,6 +2435,7 @@ begin
 	AddRPGMenuItem( RPM , MsgString( 'EJECT_Yes' ) , 1 );
 	AddRPGMenuItem( RPM , MsgString( 'EJECT_No' ) , -1 );
 	SetItemByPosition( RPM , 2 );
+	AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 	if SelectMenu( RPM , @MenuControlRedraw ) <> -1 then begin
@@ -2525,6 +2539,7 @@ begin
 		RPI^.msg := KeyMap[RPI^.Value].KCode + ' - ' + RPI^.msg;
 		RPI := RPI^.Next;
 	end;
+	AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 	SelectMenu( RPM , @PCActionRedraw );
@@ -2574,6 +2589,7 @@ begin
 	AddRPGMenuItem( RPM , MsgString( 'HELP_Mecha' ) , 3 );
 	AddRPGMenuItem( RPM , MsgString( 'HELP_FieldHQ' ) , 4 );
 	AddRPGMenuItem( RPM , MsgString( 'HELP_Exit' ) , -1 );
+	AlphaKeyMenu( RPM );
 
 	repeat
 {$IFDEF SDLMODE}
@@ -2909,6 +2925,7 @@ begin
 	AddRPGMenuItem( RPM , 'Character Info' , 6 );
 	AddRPGMenuItem( RPM , 'Quit Game' , -2 );
 	AddRPGMenuItem( RPM , 'Return to Main' , -1 );
+	AlphaKeyMenu( RPM );
 
 	DialogMsg('Advanced options menu.');
 
@@ -2943,6 +2960,7 @@ begin
 	AddRPGMenuItem( RPM , 'Examine Map' , 1 );
 	AddRPGMenuItem( RPM , 'Mecha Browser' , 3 );
 	AddRPGMenuItem( RPM , 'Return to Main' , -1 );
+	AlphaKeyMenu( RPM );
 
 	DialogMsg('Information Menu.');
 
@@ -3024,6 +3042,7 @@ begin
 	AddRPGMenuItem( RPM , 'Info Menu', -2 );
 	AddRPGMenuItem( RPM , 'Options Menu', -5 );
 	AddRPGMenuItem( RPM , 'Search' , -6 );
+	AlphaKeyMenu( RPM );
 
 	{ Set the SelectItem field of the menu to the }
 	{ item which matches the mek's last menu action. }

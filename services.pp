@@ -358,6 +358,7 @@ begin
 	if ( Part^.SubCom <> Nil ) or ( Part^.InvCom <> Nil ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BrowseParts' ) , 2 );
 	if ( SeekSubsByG( Part^.SubCom , GG_Ammo ) <> Nil ) and ( Part^.Scale = 0 ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BuyClips' ) , 4 );
 	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
+	AlphaKeyMenu( YNMenu );
 
 	msg := MSgString( 'BuyPROMPT' + Bstr( Random( 4 ) + 1 ) );
 	msg := ReplaceHash( msg , GearName( Part ) );
@@ -528,6 +529,7 @@ begin
     {$ENDIF}
 	AddRPGMenuItem( YNMenu , 'Sell ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
 	AddRPGMenuItem( YNMenu , 'Maybe later' , -1 );
+	AlphaKeyMenu( YNMenu );
 
 	{ Query the menu - Sell it or not? }
 	msg := MSgString( 'SELLPROMPT' + Bstr( Random( 4 ) + 1 ) );
@@ -1241,6 +1243,7 @@ begin
 		I := I^.Next;
 	end;
 	RPMSortAlpha( RPM );
+	AlphaKeyMenu( RPM );
 
 	{ Error check - if for some reason we are left with a blank }
 	{ menu, better leave this procedure. }
@@ -1309,6 +1312,7 @@ begin
 
 	RPMSortAlpha( RPM );
 	AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
+	AlphaKeyMenu( RPM );
 
 	CreateMechaMenu := RPM;
 end;
@@ -1334,6 +1338,7 @@ begin
         {$ENDIF}
 		BuildInventoryMenu( RPM , PCInv );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
+        AlphaKeyMenu( RPM );
 
 		SetItemByPosition( RPM , MI );
 
@@ -1395,6 +1400,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellMekInv' ) , 4 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_BrowseParts' ) , 3 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
+        AlphaKeyMenu( RPM );
         SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
@@ -1581,6 +1587,7 @@ var
         {$ENDIF}
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_Pay_Yes' ) , 1 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_Pay_No' ) , -1 );
+        AlphaKeyMenu( RPM );
 
         SERV_Customer := PC;
 {$IFDEF SDLMODE}
@@ -1619,6 +1626,7 @@ var
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
         {$ENDIF}
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_WaitPrompt' ) , -1 );
+        AlphaKeyMenu( RPM );
 		ClearCyberSlot( Slot , Item );
 		DelinkGear( Item^.Parent^.InvCom , Item );
 		Result := ReduceTrauma( Item );
@@ -1653,6 +1661,7 @@ begin
     {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
     {$ENDIF}
+	AlphaKeyMenu( RPM );
 	CreateCyberMenu;
 
 	if RPM^.NumItem > 0 then begin
@@ -1680,6 +1689,7 @@ begin
 				RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
                 {$ENDIF}
 				BuildSubMenu( RPM , PC , Item , False );
+                AlphaKeyMenu( RPM );
 				if RPM^.NumItem = 1 then begin
 					Slot := LocateGearByNumber( PC , RPM^.FirstItem^.Value );
 				end else if RPM^.NumItem > 1 then begin
@@ -1817,6 +1827,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Inventory' ) , -6 );
 
 		AddRPGMenuItem( RPM , 'Exit Shop' , -1 );
+        AlphaKeyMenu( RPM );
 
 		{ Display the trading stats. }
 {$IFDEF SDLMODE}
@@ -1929,7 +1940,7 @@ begin
 	AddRPGMenuKey( SkillMenu , KeyMap[ KMC_East ].KCode , -3 );
 	AddRPGMenuKey( SkillMenu , KeyMap[ KMC_West ].KCode , -4 );
 {$ENDIF}
-
+	AlphaKeyMenu( SkillMenu );
 
 	repeat
 		{ Display the trading stats. }
@@ -1968,6 +1979,7 @@ begin
 			{ Add the exit option, so that we'll never have }
 			{ an empty menu. }
 			AddRPGMenuItem( CostMenu , MsgString( 'SCHOOL_ExitCostSelector' ) , -1 );
+            AlphaKeyMenu( CostMenu );
 
 {$IFDEF SDLMODE}
 			Chat_Message := MsgString( 'SCHOOL_HowMuch' );
@@ -2116,6 +2128,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 {$IFDEF SDLMODE}
         SERV_Menu := RPM;
+        AlphaKeyMenu( RPM );
 		N := SelectMenu( RPM , @BrowseTreeRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
@@ -2133,6 +2146,7 @@ begin
                 {$ENDIF}
 				AddRPGMenuItem( RPM , ReplaceHash( MsgString( 'SERVICES_MoveYes' ) , GearName( Mek ) ) , 1 );
 				AddRPGMenuItem( RPM , MsgString( 'SERVICES_MoveNo' ) ,  -1 );
+                AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
                 SERV_Info := Mek;
@@ -2338,6 +2352,7 @@ begin
 
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellStuff' ) , -5 );
 		AddRPGMenuItem( RPM , 'Exit Shop' , -1 );
+        AlphaKeyMenu( RPM );
 
 {$IFDEF SDLMODE}
 		N := SelectMenu( RPM , @BasicServiceRedraw );
