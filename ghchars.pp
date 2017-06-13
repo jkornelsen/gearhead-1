@@ -167,6 +167,7 @@ Const
 	USAGE_PickPockets = 6;		{ The same. }
 
 	SkillMan: Array [1..NumSkill] of SkillDesc = (
+		{ Skills 1 - 5 }
 		(	name: 'Mecha Gunnery';
 			stat: STAT_Reflexes;
 			meksys: MS_Targeting;
@@ -188,6 +189,7 @@ Const
 			meksys: MS_Maneuver;
 			Usage: 0;			),
 
+		{ Skills 6 - 10 }
 		(	name: 'Small Arms';
 			stat: STAT_Reflexes;
 			meksys: 0;
@@ -209,6 +211,7 @@ Const
 			meksys: 0;
 			Usage: 0;			),
 
+		{ Skills 11 - 15 }
 		(	name: 'Awareness';
 			stat: STAT_Perception;
 			meksys: MS_Sensor;
@@ -230,6 +233,7 @@ Const
 			meksys: 0;
 			Usage: USAGE_Repair;		),
 
+		{ Skills 16 - 20 }
 		(	name: 'Medicine';
 			stat: STAT_Knowledge;
 			meksys: 0;

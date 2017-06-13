@@ -1,6 +1,7 @@
 *.py[cod]
 *.o
 *.ppu
+fp__*
 SaveGame/
 arena
 gharena

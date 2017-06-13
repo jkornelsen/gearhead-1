@@ -97,6 +97,7 @@ TeamAttack <GrabTeam ? GSetNAtt NAG_SideReaction 1 -1 GrabTeam 1 GSetNAtt NAG_Si
 TeamAlly <GrabTeam ? GSetNAtt NAG_SideReaction 1 1 GrabTeam 1 GSetNAtt NAG_SideReaction ! 1>
 TeamNeutral <GrabTeam ? GSetNAtt NAG_SideReaction 1 0 GrabTeam 1 GSetNAtt NAG_SideReaction ! 0>
 MENTAL <GrabPCPilot GMental>
+MENTALSMALL <GrabPCPilot GMentalSmall>
 OneVictimRecovered <GrabCurrentScene GAddNAtt NAG_Narrative NAS_VictimsRecovered 1>
 SetNPCRep <GrabNPC ? GSetNAtt NAG_CharDescription - ? ?>
 NPCQuitLance <GrabNPC ? GQuitLance>

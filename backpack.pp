@@ -1540,27 +1540,53 @@ var
 begin
 	TIWS_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
 
-	if Item^.G = GG_Usable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItem' ) , GearName( Item ) ) , -9 );
-	if Item^.G = GG_Consumable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_EatItem' ) , GearName( Item ) ) , -10 );
+    if PC = TruePC then begin
+        { PC inventory }
+        if Item^.G = GG_Usable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItem' ) , GearName( Item ) ) , -9 );
+        if Item^.G = GG_Consumable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_EatItem' ) , GearName( Item ) ) , -10 );
 
-	if SATtValue( Item^.SA , 'USE' ) <> '' then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItemScript' ) , GearName( Item ) ) , -11 );
+        if SATtValue( Item^.SA , 'USE' ) <> '' then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItemScript' ) , GearName( Item ) ) , -11 );
 
-	if Item^.G = GG_Ammo then AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 );
-	if IsInvCom( Item ) then begin
-		if Item^.Parent = PC then begin
-			AddRPGMenuItem( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 );
-			if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) then begin
-				AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Install' ) + GearName( Item ) , -8 );
-			end;
-		end else begin
-			AddRPGMenuItem( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 );
-		end;
-		if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItem ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6 );
-		AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 );
-	end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
-		AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7 );
-	end;
-	AddRepairOptions( TIWS_Menu , TruePC , Item );
+        if Item^.G = GG_Ammo then AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 );
+        if IsInvCom( Item ) then begin
+            if Item^.Parent = PC then begin
+                AddRPGMenuItem( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 );
+            end else begin
+                AddRPGMenuItem( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 );
+            end;
+            if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItem ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6 );
+            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 );
+        end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
+            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7 );
+        end;
+        AddRepairOptions( TIWS_Menu , TruePC , Item );
+    end else begin
+        { Mecha inventory }
+        if IsInvCom( Item ) then begin
+            if Item^.Parent = PC then begin
+                AddRPGMenuItem( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 );
+                if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) then begin
+                    AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Install' ) + GearName( Item ) , -8 );
+                end else begin
+                    AddRPGMenuItem( TIWS_Menu , '-' , 0 );  { cannot install }
+                end;
+            end else begin
+                AddRPGMenuItem( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 );
+                AddRPGMenuItem( TIWS_Menu , '-' , 0 );  { cannot install }
+            end;
+            if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItem ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6 );
+            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 );
+        end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
+            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7 );
+        end;
+        if Item^.G = GG_Usable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItem' ) , GearName( Item ) ) , -9 );
+        if Item^.G = GG_Consumable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_EatItem' ) , GearName( Item ) ) , -10 );
+
+        if SATtValue( Item^.SA , 'USE' ) <> '' then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItemScript' ) , GearName( Item ) ) , -11 );
+        if Item^.G = GG_Ammo then AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 );
+
+        AddRepairOptions( TIWS_Menu , TruePC , Item );
+    end;
 
 	if ( Item^.G = GG_Weapon ) or ( ( Item^.G = GG_Ammo ) and ( Item^.S = GS_Grenade ) ) then begin
 		if NAttValue( Item^.NA , NAG_WeaponModifier , NAS_SafetySwitch ) = 0 then begin

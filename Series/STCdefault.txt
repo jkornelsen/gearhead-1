@@ -769,7 +769,7 @@ roguechar <=>
 roguechar1 <->
 roguechar2 <=>
 SDL_Sprite <meta_terrain.png>
-CLUE32 <ifG StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV 50 SetStat STAT_Lock 0 Transform 1>
+CLUE32 <ifG StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV * StatVal STAT_Lock 2 SetStat STAT_Lock 0 Transform 1>
 GoNoUnlock <Print 4>
 GoNotLocked <Print 5>
 REVEAL <Print 7>
@@ -796,7 +796,7 @@ roguechar <=>
 roguechar1 <->
 roguechar2 <=>
 SDL_Sprite <meta_terrain.png>
-CLUE32 <ifG StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV 50 SetStat STAT_Lock 0 Transform 1>
+CLUE32 <ifG StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV * StatVal STAT_Lock 2 SetStat STAT_Lock 0 Transform 1>
 GoNoUnlock <Print 4>
 GoNotLocked <Print 5>
 REVEAL <Print 7>

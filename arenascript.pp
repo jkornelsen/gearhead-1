@@ -61,6 +61,7 @@ var
 	{ middle of a conversation and all other interaction variables }
 	{ should have good values. }
 	IntMenu: RPGMenuPtr;	{ Interaction Menu }
+    IntMenuCleared: Boolean;
 	I_PC,I_NPC: GearPtr;	{ Pointers to the PC & NPC Chara gears }
 	I_Endurance: Integer;	{ How much of the PC's crap the NPC is }
 		{ willing to take. When it reaches 0, the NPC says goodbye. }
@@ -229,6 +230,7 @@ var
 			AddRPGMenuItem( RPM , MsgString( 'MEMO_Prev' ) , 2 );
 			AddRPGMenuKey( RPM , KeyMap[ KMC_East ].KCode , 1 );
 			AddRPGMenuKey( RPM , KeyMap[ KMC_West ].KCode , 2 );
+			AlphaKeyMenu( RPM );
 			RPM^.Mode := RPMNoCleanup;
 			N := 1;
 
@@ -1609,6 +1611,7 @@ begin
 		DeleteWhiteSpace( msg );
 		if Msg <> '' then begin
 			AddRPGMenuItem( IntMenu , Msg , N );
+			RPMSortAlpha( IntMenu );
 		end;
 	end;
 end;
@@ -2061,12 +2064,14 @@ begin
 	{ of them. }
 	end else if IntMenu^.FirstItem <> Nil then begin
 		ClearMenu( IntMenu );
+        IntMenuCleared := True;
 	end;
 
 	AddRPGMenuItem( IntMenu , '[Chat]' , CMD_Chat );
 	AddRPGMenuItem( IntMenu , '[Goodbye]' , -1 );
 	if ( I_NPC <> Nil ) and ( NAttValue( I_NPC^.NA , NAG_Relationship , 0 ) > 0 ) and ( NAttValue( I_NPC^.NA , NAG_Location , NAS_Team ) <> NAV_LancemateTeam ) then AddRPGMenuItem( IntMenu , '[Join]' , CMD_Join );
 	if ( I_NPC <> Nil ) and ( NAttValue( I_NPC^.NA , NAG_Location , NAS_Team ) = NAV_LancemateTeam ) then AddRPGMenuItem( IntMenu , '[Quit Lance]' , CMD_Quit );
+	RPMSortAlpha( IntMenu );
 end;
 
 Procedure ProcessEndChat;
@@ -2077,6 +2082,7 @@ begin
 		Exit;
 	end else begin
 		ClearMenu( IntMenu );
+        IntMenuCleared := True;
 	end;
 end;
 
@@ -2379,7 +2385,6 @@ Procedure ProcessDeployGG( var Event: String; GB: GameBoardPtr; Source: GearPtr 
 	{ Only physical gears can be moved in this way. }
 var
 	Team: Integer;
-	Scene: GearPtr;
 	P: Point;
 begin
 	{ Check to make sure we have a valid gear to move. }
@@ -3669,14 +3674,14 @@ begin
 	end;
 end;
 
-Procedure ProcessGMental( GB: GameBoardPtr );
+Procedure ProcessGMental( GB: GameBoardPtr; Strain: Integer );
 	{ The grabbed gear is doing something. Make it wait, and spend }
-	{ one mental point. }
+	{ mental points. }
 begin
 	{ As long as we have a grabbed gear, go for it! }
 	if Grabbed_Gear <> Nil then begin
 		WaitAMinute( GB , Grabbed_Gear , ReactionTime( Grabbed_Gear ) * 3 );
-		AddMentalDown( Grabbed_Gear , 5 );
+		AddMentalDown( Grabbed_Gear , Strain );
 	end;
 end;
 
@@ -3970,7 +3975,8 @@ begin
 		    else if cmd = 'GMORALEDMG' then ProcessGMoraleDmg( Event , GB , Source )
 		    else if cmd = 'DRAWTERR' then ProcessDrawTerr( Event , GB , Source )
 		    else if cmd = 'MAGICMAP' then ProcessMagicMap( GB )
-		    else if cmd = 'GMENTAL' then ProcessGMental( GB )
+		    else if cmd = 'GMENTAL' then ProcessGMental( GB, 5 )
+		    else if cmd = 'GMENTALSMALL' then ProcessGMental( GB, 2 )
 		    else if cmd = 'GQUITLANCE' then ProcessGQuitLance( GB )
 		    else if cmd = 'LOSERENOWN' then ProcessLoseRenown( GB )
 
@@ -4118,10 +4124,10 @@ var
 	N,FreeRumors: Integer;
 	RTT: LongInt;		{ ReTalk Time }
 	T: String;
-    IntRoot: GearPtr;
 begin
 	{ Start by allocating the menu. }
 	IntMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    IntMenuCleared := True;
 
 	{ Set up the display. }
 	SetupInteractDisplay( TeamColor( GB , NPC ) );
@@ -4179,7 +4185,10 @@ begin
 {$ENDIF}
 
 		if IntMenu^.NumItem > 0 then begin
-            { AlphaKeyMenu( IntMenu ); }
+            if IntMenuCleared = True then begin
+                AlphaKeyMenu( IntMenu );
+                IntMenuCleared := False;
+            end;
 {$IFDEF SDLMODE}
 			ASRD_GameBoard := GB;
 			CHAT_React := ReactionScore( GB^.Scene , PC , NPC );

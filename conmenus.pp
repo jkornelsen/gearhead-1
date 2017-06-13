@@ -86,7 +86,7 @@ Function SelectFile( RPM: RPGMenuPtr ): String;
 
 implementation
 
-uses crt,dos,congfx,context,ui4gh;
+uses crt,dos,congfx,context,menugear,ui4gh;
 
 Function LastMenuItem(MIList: RPGMenuItemPtr): RPGMenuItemPtr;
 	{This procedure will find the last item in the linked list.}
@@ -818,6 +818,7 @@ var
 	Name: String;	{ The name of the filename selected. }
 begin
 	{ Do the menu selection first. }
+	{ AlphaKeyMenu( RPM ); }
 	N := SelectMenu( RPM );
 
 	if N = -1 then begin
