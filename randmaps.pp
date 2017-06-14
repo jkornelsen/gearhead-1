@@ -358,7 +358,7 @@ begin
 			Roll := Random( 100 );
 			if Roll < Chance then begin
 				{ NewDoor^.Stat[ STAT_Lock ] := ( Roll div 4 ) + 5; }
-				NewDoor^.Stat[ STAT_Lock ] := ( Roll div 7 ) + 5;
+				NewDoor^.Stat[ STAT_Lock ] := ( Roll div 6 ) + 5;
 			end;
 		end;
 		Chance := NAttValue( MF^.NA , NAG_Narrative , NAS_SecretDoorChance );
