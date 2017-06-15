@@ -32,11 +32,11 @@ sub
 
 	% Check to see if the PC has completed a mission.
 	GoNoEnemy <if# S1 0 else GoCheckProphecy if= S1 S3 else GoNormal if= S3 3 else GoWin_M2 if= S10 3 else GoPyrrhicVictory  Goto GoGoodVictory>
-	GoGoodVictory <History 15 EndStory Say 19 XPV 1000 FacAlliance 9 2 FacAlliance 2 9 FacAlliance 10 9 FacAlliance 9 10>
+	GoGoodVictory <History 15 EndStory Say 19 XPV 1000 FacXP+ 9 1 FacAlliance 9 2 FacAlliance 2 9 FacAlliance 10 9 FacAlliance 9 10>
 	GoPyrrhicVictory <History 16 EndStory DeleteFaction 9 Say 17 AddChat 11>
-	GoWin_M2 <if= S3 2 else GoWin_M1 S= 1 3 Say 25>
-	GoWin_M1 <S= 1 2 if= S11 1 else GoWin_M1_Norm Say 20 AddChat 12 AddChat 13>
-	GoWin_M1_Norm <Say 21>
+	GoWin_M2 <if= S3 2 else GoWin_M1 S= 1 3 FacXP+ 9 1 Say 25>
+	GoWin_M1 <S= 1 2 if= S11 1 else GoWin_M1_Norm FacXP+ 9 1 Say 20 AddChat 12 AddChat 13>
+	GoWin_M1_Norm <FacXP+ 9 1 Say 21>
 	GoNormal <Say 2 AddChat 10>
 
 	% Check to see if the PC will be told of the prophecy.
@@ -74,7 +74,7 @@ sub
 	Msg8 <Are you saying that you're willing to give up your past life, to dedicate yourself entirely to Clan Ironwind and follow the path of the prophecy?>
 	Msg9 <The hero of legend must be dedicated entirely to our clan, with all the responsibility that entails.>
 	Msg10 <It is one thing to say you are a hero, but quite another to prove it. I will induct you into the clan. Your first task shall be the punishment of our foes.>
-	Msg11 <All conflict shall end once Clan Ironwind has completely destroyed our enemies. We shall start with Clan Markheim...>
+	Msg11 <All conflict shall end once Clan Ironwind has completely subdued our enemies. We shall start with Clan Markheim...>
 	Msg12 <Our land shall be made green and prosperous. For this, I think it is obvious that we will need water... There has been talk of capturing a desalination plant from our enemies. See what you can find about this.>
 	Msg13 <The ancient wrongs shall be righted. Many years ago the band of the Scorcher Khan stole an artifact of great value from us. You must recover this treasure, then kill every man in the Khan's camp.>
 	Msg14 <You joined Clan Ironwind to fulfil their prophecy.>

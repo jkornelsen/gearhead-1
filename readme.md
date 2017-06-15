@@ -109,8 +109,27 @@ which is 20% of the mecha's worth.
 Perhaps aim for 25%, at least including salvage.
 
 
-# (No Progress)
+# Started Implementing
 Ironwind Story
-Win x fights in the Pit to earn the respect of the Clan.
-Focused on personal combat rather than mecha fighting?
-I'm not sure I will actually attempt this, but I like the idea.
+Flesh Pit victories add Clan IronWind FacXP.
+Themes:
+- Armed Combat (as Flesh Pit reward)
+- Intimidation (dominate dead zone)
+- Leadership (scepter)
+- Survival, because Markheim Fortress will no longer provide services close
+  to Ziggurat
+- power (Heavy Weapons, Vitality) rather than speed (Stealth, Initiative)
+
+Perhaps IronWind faction is generally Lawful but somewhat Villainous,
+making it difficult to join Hwang-Sa afterwards.
+
+Holding the Rusty Scepter also gives a FacXP bonus when joining.
+Reading the Monolith has a chance at FacXP once per day.
+
+Done but not tested:
+    trainer
+    promotions
+    faction XP
+To do:
+    3 quests
+    change services when town becomes green

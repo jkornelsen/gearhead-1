@@ -1,0 +1,12 @@
+	% Quest: All conflict shall end once Clan Ironwind has completely subdued our enemies. We shall start with Clan Markheim...
+	% Success: We have made peace with our enemies.
+    %
+    % Destroy the in-town mushroom patch in Markheim Fortress.
+    % That means the cook can never do the research.
+    % It also adds +10 Villainous.
+    % Also destroy the tank machines so that Markheim Fortress cannot be
+    % protected.
+    %
+    % The result will be that Markheim Fortress will not offer food or many
+    % services, and instead those things will be found in IronWind fortress.
+

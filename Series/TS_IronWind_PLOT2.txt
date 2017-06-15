@@ -1,0 +1,4 @@
+	% Quest: Our land shall be made green and prosperous. For this, I think it is obvious that we will need water... There has been talk of capturing a desalination plant from our enemies. See what you can find about this.
+	% Success: The land has been made green.
+
+

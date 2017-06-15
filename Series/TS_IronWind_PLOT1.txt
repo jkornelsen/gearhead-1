@@ -1,0 +1,7 @@
+	% Quest: The ancient wrongs shall be righted. Many years ago the band of the Scorcher Khan stole an artifact of great value from us. You must recover this treasure, then kill every man in the Khan's camp.
+	% Success: The wrongs of the past have been righted.
+    %
+    % Should this be a new location on the map, or just a spontaneously generated
+    % town-type location?
+    % Probably the latter, since it will not be used for anything else.
+

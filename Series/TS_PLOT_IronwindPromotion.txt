@@ -1,0 +1,73 @@
+Plot 0
+	name <Promotion Reward>
+	% The PC has gone up a rank, and will
+	% now get a reward for it.
+
+	% Element 1 is the calling faction
+	% Persona 1 is the character who'll give the PC the reward
+    Stat 1 4301
+
+	% These are faction rewards...
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+	Element6 <Prefab>
+
+	% V1 = Email Indicator
+
+	% This plot will remain active until the PC collects his
+	% reward, until the NPC dies, or until the PC is no longer
+	% a member of the calling faction.
+	start <ifNPCOK E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d5 V= 1 1>
+	GoReschedule <FacVar+ E1 1 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You've earned a promotion. Come see me to accept your reward.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// I have urgent business which requires your attention at once.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Report here for debriefing at once, \RANK .>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// You have been promoted. Report here to receive a reward.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// Your presence is required immediately.>
+
+sub
+	Persona 1
+	% V1 = Faction level the PC is being rewarded for.
+	greeting <NewChat XPV 100 V= 1 FacVar E1 2 V+ 1 1 FacVar= E1 2 V1 AdvancePlot 0 Goto GoL0>
+	GoL0 <ifG 9 V1 else GoBigLevel ifG FXPNeeded V1 PCRep 6 else GoL1 CashPrize Reward Threat FXPNeeded V1 100 250 Say 10>
+	GoL1 <if= V1 1 else GoL2 Say 1 MechaPrize .mek1>
+	.mek1 <Claymore.txt>
+	GoL2 <if= V1 2 else GoL3 Say 2 CashPrize 250000>
+	GoL3 <if= V1 3 else GoL4 Say 3 MechaPrize .mek2>
+	.mek2 <Trailblazer.txt>
+	GoL4 <if= V1 4 else GoL5 Say 4 GiveKeyItem E3 GiveKeyItem E5 GiveKeyItem E5>
+	GoL5 <if= V1 5 else GoL6 Say 5 PCSkill+ 8 2 PCSkill+ 28 2 PCStat+ 6 2>
+	GoL6 <if= V1 6 else GoL7 Say 6 GiveKeyItem E4 GiveKeyItem E6 GiveKeyItem E6>
+	GoL7 <if= V1 7 else GoBigLevel Say 7 PCSkill+ 39 4 PCStat+ 8 3>
+	GoBigLevel <Say 8 CashPrize 500000>
+
+	Msg1 <You have been promoted to the rank of \FacRank E1 V1 . Our mecha force is limited, but here is one that we can afford to give you.>
+	Msg2 <You have been promoted to the rank of \FacRank E1 V1 . Here's a cash bonus.>
+	Msg3 <You have been promoted to the rank of \FacRank E1 V1 . Here's a mecha that our scouts use.>
+	Msg4 <You have been promoted to the rank of \FacRank E1 V1 . You've earned the respect of the Clan and will receive lightweight armor for long campaigns in the dead zone .>
+	Msg5 <You have been promoted to the rank of \FacRank E1 V1 . Enemies will think twice before engaging you in battle.>
+	Msg6 <You have been promoted to the rank of \FacRank E1 V1 . The full suit of DeadZone armor is now yours.>
+	Msg7 <You have been promoted to the rank of \FacRank E1 V1 . You have earned the undying loyalty of the Clan.>
+	Msg8 <Here is a small cash reward in recognition of your service.>
+
+end
+inv
+	BodyArmor 7
+	name <DeadZone Breastplate>
+	Mass -10
+
+	HeadArmor 5
+	name <DeadZone Helmet>
+	mass -6
+
+    ArmArmor 4
+    Name <DeadZone Sleeve>
+    Mass -8
+
+    LegArmor 4
+    Name <DeadZone Legging>
+    Mass -8
+end
