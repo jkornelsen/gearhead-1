@@ -827,10 +827,10 @@ begin
 		DoleExperience( TruePC , 1 );
 		it := True;
 
-	{ end else if SkRoll > SkTarget then begin }
-	{	RemoveGear( Item^.Parent^.SubCom , Item ); }
-	{	Item := Nil; }
-	{	it := True; }
+	end else if (EngineeringMayDestroy) and (SkRoll > SkTarget) then begin
+		RemoveGear( Item^.Parent^.SubCom , Item );
+		Item := Nil;
+		it := True;
 
 	end else begin
 		it := False;
@@ -973,9 +973,9 @@ begin
 		DoleExperience( TruePC , 10 );
 		DelinkGear( Item^.Parent^.InvCom , Item );
 		InsertSubCom( Slot , Item );
-	{ end else if SkRoll < WreckTarget then begin }
-	{	RemoveGear( Item^.Parent^.InvCom , Item ); }
-	{	Item := Nil; }
+	end else if (EngineeringMayDestroy) and (SkRoll < WreckTarget) then begin
+		RemoveGear( Item^.Parent^.InvCom , Item );
+		Item := Nil;
 	end;
 
 	AddMentalDown( TruePC , 1 );
@@ -1540,66 +1540,36 @@ var
 begin
 	TIWS_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
 
-    if PC = TruePC then begin
-        { PC inventory }
-        if Item^.G = GG_Usable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItem' ) , GearName( Item ) ) , -9 );
-        if Item^.G = GG_Consumable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_EatItem' ) , GearName( Item ) ) , -10 );
+    if Item^.G = GG_Usable then AddRPGMenuItemWithKey( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItem' ) , GearName( Item ) ) , -9 , 'u' );
+    if Item^.G = GG_Consumable then AddRPGMenuItemWithKey( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_EatItem' ) , GearName( Item ) ) , -10, 'c' );
 
-        if SATtValue( Item^.SA , 'USE' ) <> '' then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItemScript' ) , GearName( Item ) ) , -11 );
+    if SATtValue( Item^.SA , 'USE' ) <> '' then AddRPGMenuItemWithKey( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItemScript' ) , GearName( Item ) ) , -11 , 'p' );
 
-        if Item^.G = GG_Ammo then AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 );
-        if IsInvCom( Item ) then begin
-            if Item^.Parent = PC then begin
-                AddRPGMenuItem( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 );
-            end else begin
-                AddRPGMenuItem( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 );
-            end;
-            if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItem ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6 );
-            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 );
-        end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
-            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7 );
+    if Item^.G = GG_Ammo then AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 , 'l' );
+    if IsInvCom( Item ) then begin
+        if Item^.Parent = PC then begin
+            AddRPGMenuItemWithKey( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 , 'e' );
+        end else begin
+            AddRPGMenuItemWithKey( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 , 'n' );
         end;
-        AddRepairOptions( TIWS_Menu , TruePC , Item );
-    end else begin
-        { Mecha inventory }
-        if IsInvCom( Item ) then begin
-            if Item^.Parent = PC then begin
-                AddRPGMenuItem( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 );
-                if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) then begin
-                    AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Install' ) + GearName( Item ) , -8 );
-                end else begin
-                    AddRPGMenuItem( TIWS_Menu , '-' , 0 );  { cannot install }
-                end;
-            end else begin
-                AddRPGMenuItem( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 );
-                AddRPGMenuItem( TIWS_Menu , '-' , 0 );  { cannot install }
-            end;
-            if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItem ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6 );
-            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 );
-        end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
-            AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7 );
-        end;
-        if Item^.G = GG_Usable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItem' ) , GearName( Item ) ) , -9 );
-        if Item^.G = GG_Consumable then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_EatItem' ) , GearName( Item ) ) , -10 );
-
-        if SATtValue( Item^.SA , 'USE' ) <> '' then AddRPGMenuItem( TIWS_Menu , ReplaceHash( MsgString( 'BACKPACK_UseItemScript' ) , GearName( Item ) ) , -11 );
-        if Item^.G = GG_Ammo then AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 );
-
-        AddRepairOptions( TIWS_Menu , TruePC , Item );
+        if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItemWithKey ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6, 't' );
+        AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 , 'd' );
+    end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
+        AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7, 'r' );
     end;
+    AddRepairOptions( TIWS_Menu , TruePC , Item );
 
 	if ( Item^.G = GG_Weapon ) or ( ( Item^.G = GG_Ammo ) and ( Item^.S = GS_Grenade ) ) then begin
 		if NAttValue( Item^.NA , NAG_WeaponModifier , NAS_SafetySwitch ) = 0 then begin
-			AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_EngageSafety' ) , -12 );
+			AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_EngageSafety' ) , -12 , 'g' );
 		end else begin
-			AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DisengageSafety' ) , -12 );
+			AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_DisengageSafety' ) , -12 , 'f' );
 		end;
 	end;
 
-	AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_UseSkillOnItem' ) , 1 );
-	AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_ExitTIWS' ) , -1 );
+	AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_UseSkillOnItem' ) , 1 , 'a' );
+	AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_ExitTIWS' ) , -1 , 'x' );
 
-    AlphaKeyMenu( TIWS_Menu );
 	repeat
 {$IFDEF SDLMODE}
 		BP_Focus := Item;

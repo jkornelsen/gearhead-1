@@ -175,8 +175,6 @@ begin
 	{ If any units are found, allow the player to load one. }
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
-        { AlphaKeyMenu causes a crash here. }
-        { AlphaKeyMenu( RPM ); }
 		DialogMSG('Select campaign file to load.');
 {$IFDEF SDLMODE}
 		rpgname := SelectFile( RPM , Redrawer );

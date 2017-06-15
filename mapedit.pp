@@ -69,7 +69,6 @@ var
 begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 	BuildFileMenu( RPM , Series_Directory + '*MAP_*.txt' );
-	AlphaKeyMenu( RPM );
 	FName := SelectFile( RPM );
 	DisposeRPGMenu( RPM );
 	if FName <> '' then begin

@@ -97,6 +97,8 @@ const
 
     Accessibility_On: Boolean = False;
 
+    EngineeringMayDestroy: Boolean = True;
+
 	{ *** SCREEN DIMENSIONS *** }
 	ScreenRows: Byte = 25;
 	ScreenColumns: Byte = 80;
@@ -482,6 +484,9 @@ uses dos,ability,gears,texutil;
                     end else if cmd = 'ACCESSIBILITY_ON' then begin
                         Accessibility_On := True;
 
+					end else if cmd = 'ENGINEERING_NEVER_DESTROYS' then begin
+						EngineeringMayDestroy := False;
+
 				    end else if cmd[1] = '#' then begin
 					    S := '';
 
@@ -560,6 +565,7 @@ uses dos,ability,gears,texutil;
 
 	    AddBoolean( 'ADVANCEDCOLORS' ,  UseAdvancedColoring );
 	    AddBoolean( 'ACCESSIBILITY_ON' ,  Accessibility_On );
+	    AddBoolean( 'ENGINEERING_NEVER_DESTROYS' , not EngineeringMayDestroy );
 
 	    Close(F);
     end;

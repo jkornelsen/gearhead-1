@@ -1403,7 +1403,6 @@ begin
 
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
-        AlphaKeyMenu( RPM );
 		DialogMSG('Select plot file to load.');
 {$IFDEF SDLMODE}
 		pname := SelectFile( RPM , @MenuControlRedraw );
@@ -1868,12 +1867,12 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 	Procedure ReviewTalents( PC: GearPtr );
 		{ The PC is going to review his talents. }
 	var
-		FXP: LongInt;		{ Free XP Points }
+		{ FXP: LongInt;	}	{ Free XP Points }
 		TMenu: RPGMenuPtr;	{ Training Hall Menu }
 		N: LongInt;		{ A number }
 	begin
 		{ The number of free XP is the total XP minus the spent XP. }
-		FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP );
+		{ FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP ); }
 
 		{ Create the skill menu. }
 {$IFDEF SDLMODE}
@@ -1910,13 +1909,13 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 	Procedure ReviewCyberware( PC: GearPtr );
 		{ The PC is going to review his talents. }
 	var
-		FXP: LongInt;		{ Free XP Points }
+		{ FXP: LongInt;	}	{ Free XP Points }
 		S: GearPtr;		{ Subcoms of PC. }
 		TMenu: RPGMenuPtr;	{ Training Hall Menu }
 	begin
 		{ The number of free XP is the total XP minus the spent XP. }
 		{ We just need this for display purposes. }
-		FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP );
+		{ FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP ); }
 
 		{ Create the cyber menu. }
 {$IFDEF SDLMODE}
@@ -3148,8 +3147,12 @@ end;
 Procedure PCLeftButton( GB: GameBoardPtr; PC: GearPtr );
 	{ The PC has just hit a mouse button. Do something. }
 var
-	P1,P2: Point;
-	M,Weapon: GearPtr;
+    Weapon: GearPtr;
+{$IFDEF SDLMODE}
+	P1: Point;
+	P2: Point;
+	M: GearPtr;
+{$ENDIF}
 	function NewWeaponBetter( W1,W2: GearPtr ): Boolean;
 		{ Return TRUE if W2 is better than W1 for the purposes }
 		{ of smartbump attacking, or FALSE otherwise. }
@@ -3187,18 +3190,20 @@ var
 			Part := Part^.Next;
 		end;
 	end;
+{$IFDEF SDLMODE}
 const
 	WalkDir: Array [-1..1,-1..1] of Byte = (
 		( 7 , 4 , 1 ),
 		( 8 , 5 , 2 ),
 		( 9 , 6 , 3 )
 	);
+{$ENDIF}
 begin
+{$IFDEF SDLMODE}
 	{ Find out where the PC is. }
 	P1 := GearCurrentLocation( PC );
 
 	{ Find out where the PC has clicked. }
-{$IFDEF SDLMODE}
 	P2 := MouseMapPos;
 
 	{ If the tile is more than one square away, check for an enemy. }
@@ -3255,7 +3260,9 @@ var
 	KP: Char;	{ Key Pressed }
 	GotMove: Boolean;
 	Mobile: Boolean;
+{$IFDEF SDLMODE}
 	P: Point;
+{$ENDIF}
 begin
 	{ The original comment said "Record where the mek currently is". }
     { But this is obviously checking to see if the mecha is mobile. }

@@ -1875,7 +1875,6 @@ Function MOVE_MODEL_TOWARDS_SPOT( Mek: GearPtr; GB: GameBoardPtr; GX,GY: Integer
 	{ A new life for an old procedure. }
 var
 	HM,X,Y: Integer;
-	it: Boolean;
 begin
 	{ Locate all the values we're gonna need. }
 	X := NAttValue( Mek^.NA , NAG_Location , NAS_X );

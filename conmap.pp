@@ -1022,8 +1022,6 @@ end;
 
 Procedure BeginTurn( GB: GameBoardPtr; M: GearPtr );
 	{ Time to start the turn. }
-var
-	A: Char;
 begin
 	SetupMemoDisplay;
 	GameMsg( 'Begin ' + PilotName( M ) + ' turn' , ZONE_MemoText , InfoHilight );

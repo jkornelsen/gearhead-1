@@ -1176,7 +1176,6 @@ begin
 	{ Otherwise, go straight to the NEW UNIT procedure. }
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
-        AlphaKeyMenu( RPM );
 		DialogMSG('Select unit file to load.');
 {$IFDEF SDLMODE}
 		uname := SelectFile( RPM , Nil );
@@ -1213,7 +1212,6 @@ begin
 
 	if RPM^.NumItem > 1 then begin
 		RPMSortAlpha( RPM );
-        AlphaKeyMenu( RPM );
 		DialogMsg( MsgString( 'SelectCampaignFile' ) );
 
 {$IFDEF SDLMODE}
@@ -1276,7 +1274,6 @@ begin
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
 		AddRPGMenuItem( RPM , MsgString( 'STARTRPG_NewChar' ) , -2 );
-        AlphaKeyMenu( RPM );
 		DialogMSG('Select character file.');
 {$IFDEF SDLMODE}
 		uname := SelectFile( RPM , RD );
@@ -1310,7 +1307,9 @@ end;
 Procedure ViewMechaDesign( Part: GearPtr );
 	{ Take a look at an individual mecha. }
 var
+{$IFDEF SDLMODE}
 	A: Char;
+{$ENDIF}
 	msg: String;
 begin
 {$IFDEF SDLMODE}

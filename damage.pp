@@ -1278,7 +1278,7 @@ var
     MyInfo: SATtPtr;
 begin
     MyInfo := Nil;
-
+    ListInfo := MyInfo;
 end;
 
 initialization

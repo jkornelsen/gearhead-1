@@ -739,6 +739,8 @@ begin
 		Inc(N);
 		FindNext( F );
 	end;
+
+	FindClose( F );
 end;
 
 Function SelectFile( RPM: RPGMenuPtr; ReDrawer: RedrawProcedureType ): String;
@@ -750,6 +752,7 @@ var
 	Name: String;	{ The name of the filename selected. }
 begin
 	{ Do the menu selection first. }
+	AlphaKeyMenu( RPM );
 	N := SelectMenu( RPM , ReDrawer );
 
 	if N = -1 then begin
@@ -758,6 +761,8 @@ begin
 	end else begin
 		{ Locate the selected element of the menu. }
 		Name := RPMLocateByPosition(RPM,RPM^.SelectItem)^.msg;
+        { Strip first 3 chars which are alpha key identifiers like 'a) '. }
+        Name := Copy(Name, 4, Length(Name));
 	end;
 
 	SelectFile := Name;

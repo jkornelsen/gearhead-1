@@ -42,6 +42,8 @@ Function FindNextWeapon( GB: GameBoardPtr; Master,CurrentWeapon: GearPtr; MinRan
 Function FindGearIndex( Master , FindThis: GearPtr ): Integer;
 
 Procedure AlphaKeyMenu( RPM: RPGMenuPtr );
+Procedure AddRPGMenuItemWithKey(var RPM: RPGMenuPtr; const msg: string; value: integer);
+Procedure AddRPGMenuItemWithKey(var RPM: RPGMenuPtr; const msg: string; value: integer; Key: Char);
 
 implementation
 
@@ -408,6 +410,45 @@ begin
 
 		MI := MI^.Next;
 	end;
+end;
+
+Function MenuHasKey( var RPM: RPGMenuPtr; Key: Char): Boolean;
+    { Returns True if the menu key already exists. }
+var
+	m: RPGMenuKeyPtr;
+begin
+    if RPM^.FirstKey <> Nil then begin
+        m := RPM^.FirstKey;
+        while m <> Nil do begin
+            if Key = m^.k then Exit(True);
+            m := m^.next;
+        end;
+    end;
+    MenuHasKey := False;
+end;
+
+Procedure AddRPGMenuItemWithKey(var RPM: RPGMenuPtr; const msg: string; value: integer);
+    { Use the first letter of msg as the menu key. }
+var
+	Key: Char;
+begin
+    for Key in LowerCase(msg) do begin
+        if (Key in ['a'..'z']) then begin
+            if not MenuHasKey( RPM , Key ) then begin
+                AddRPGMenuItem( RPM , Key + ') ' + msg , value );
+                AddRPGMenuKey( RPM , Key , value );
+                Exit();
+            end;
+        end;
+    end;
+    { Add without a key. (This should probably never happen). }
+    AddRPGMenuItem( RPM , msg , value );
+end;
+
+Procedure AddRPGMenuItemWithKey(var RPM: RPGMenuPtr; const msg: string; value: integer; Key: Char);
+begin
+    AddRPGMenuItem( RPM , Key + ') ' + msg , value );
+    AddRPGMenuKey( RPM , Key , value );
 end;
 
 end.

@@ -233,7 +233,7 @@ var
 	Procedure AddAmmoToList( Proto: GearPtr );
 		{ Create a clone of this ammunition and add it to the list. }
 	var
-		A,ATmp,AVar,VarList: GearPtr;
+		A: GearPtr;
 	begin
 		A := CloneGear( Proto );
 		AppendGear( AmmoList , A );

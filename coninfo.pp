@@ -46,7 +46,7 @@ uses crt,ability,damage,gearutil,ghchars,ghmecha,ghmodule,ghweapon,
 var
 	CX,CY: Byte;			{ Cursor Position }
 	ZX1,ZY1,ZX2,ZY2: Byte;		{ Info Zone coords }
-	LastGearShown: GearPtr;
+	{ LastGearShown: GearPtr; }
 
 const
 	SX_Char: Array [1..Num_Status_FX] of Char = (
@@ -596,7 +596,7 @@ begin
 	SetInfoZone( X1,Y1,X2,Y2,BorColor );
 
 	{ Record this gear's address. }
-	LastGearShown := Part;
+	{ LastGearShown := Part; }
 
 	{ Error check }
 	{ Note that we want the area cleared, even in case of an error. }
