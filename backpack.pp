@@ -1549,6 +1549,9 @@ begin
     if IsInvCom( Item ) then begin
         if Item^.Parent = PC then begin
             AddRPGMenuItemWithKey( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 , 'e' );
+			if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) then begin
+				AddRPGMenuItemWithKey( TIWS_Menu , MsgString( 'BACKPACK_Install' ) + GearName( Item ) , -8 , 'i' );
+			end;
         end else begin
             AddRPGMenuItemWithKey( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 , 'n' );
         end;

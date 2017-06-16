@@ -825,8 +825,8 @@ begin
 		{ Selection was canceled. So, return an empty string. }
 		Name := '';
 	end else begin
-		{ Locate the selected element of the menu. }
-		Name := RPMLocateByPosition(RPM,RPM^.SelectItem)^.msg;
+		{ Locate the chosen element of the menu. }
+		Name := RPMLocateByPosition(RPM,N)^.msg;
         { Strip first 3 chars which are alpha key identifiers like 'a) '. }
         Name := Copy(Name, 4, Length(Name));
 	end;
